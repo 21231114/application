@@ -19,7 +19,8 @@ import java.util.List;
 
 public class LeftListAdapter extends RecyclerView.Adapter<LeftListAdapter.MyHolder> {
     private List<String> dataList = new ArrayList<>();//存储食堂信息
-    private  int currentIndex = 0;//哪一个项被选中了，需要由recipesFragment告诉adapter
+    private int currentIndex = 0;//哪一个项被选中了，需要由recipesFragment告诉adapter
+    private LeftListOnClickItemListener myLeftListOnClickItemListener;
 
     public LeftListAdapter(List<String> dataList) {
         this.dataList = dataList;
@@ -31,13 +32,15 @@ public class LeftListAdapter extends RecyclerView.Adapter<LeftListAdapter.MyHold
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //inflate将布局文件转换为View对象
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recipes_left_list_item, null);
+        View view =
+            LayoutInflater.from(parent.getContext()).inflate(R.layout.recipes_left_list_item, null);
         return new MyHolder(view);
     }
 
     //将数据绑定到ViewHolder
     @Override
-    public void onBindViewHolder(@NonNull MyHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull MyHolder holder,
+                                 @SuppressLint("RecyclerView") int position) {
         String diningName = dataList.get(position);
         holder.diningHall_name.setText(diningName);//这步就把数据绑定到MyHolder了
 
@@ -50,11 +53,10 @@ public class LeftListAdapter extends RecyclerView.Adapter<LeftListAdapter.MyHold
                 }
             }
         });
-        if(currentIndex == position){
+        if (currentIndex == position) {
             holder.itemView.setBackgroundResource(R.drawable.type_selcetor_bg);
             //如果当前item被选中了，设置
-        }
-        else {
+        } else {
             holder.itemView.setBackgroundResource(R.drawable.type_selector_normal_bg);
         }
     }
@@ -77,6 +79,16 @@ public class LeftListAdapter extends RecyclerView.Adapter<LeftListAdapter.MyHold
         //数据集发生变化时，需要通知
     }
 
+    public void setMyLeftListOnClickItemListener(
+        LeftListOnClickItemListener myLeftListOnClickItemListener) {
+        this.myLeftListOnClickItemListener = myLeftListOnClickItemListener;
+    }
+
+    //定义了一个接口
+    public interface LeftListOnClickItemListener {
+        void onItemClick(int position);//接收点某个具体项的操作函数
+    }
+
     //MyHolder其实就是一个View,也就是要展示的布局
     static class MyHolder extends RecyclerView.ViewHolder {
         TextView diningHall_name;
@@ -87,17 +99,6 @@ public class LeftListAdapter extends RecyclerView.Adapter<LeftListAdapter.MyHold
             //初始化控件
             diningHall_name = itemView.findViewById(R.id.diningName);
         }
-    }
-
-    public void setMyLeftListOnClickItemListener(LeftListOnClickItemListener myLeftListOnClickItemListener) {
-        this.myLeftListOnClickItemListener = myLeftListOnClickItemListener;
-    }
-
-    private LeftListOnClickItemListener myLeftListOnClickItemListener;
-
-    //定义了一个接口
-    public interface LeftListOnClickItemListener {
-        void onItemClick(int position);//接收点某个具体项的操作函数
     }
 
 }

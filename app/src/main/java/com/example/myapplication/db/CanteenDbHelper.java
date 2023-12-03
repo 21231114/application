@@ -16,12 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CanteenDbHelper extends SQLiteOpenHelper {
-    private static CanteenDbHelper sHelper;
     private static final String DB_NAME = "canteen.db";//数据库名
     private static final int VERSION = 1;//版本号
+    private static CanteenDbHelper sHelper;
 
     //实现其中构造方法
-    public CanteenDbHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
+    public CanteenDbHelper(@Nullable Context context, @Nullable String name,
+                           @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
@@ -37,10 +38,14 @@ public class CanteenDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL("create table canteen_table(canteen_id integer primary key autoincrement, " +
-                "canteen_name text unique" +       //食堂名,不能重复
-                ")");
-
-
+            "canteen_name text unique" +       //食堂名,不能重复
+            ")");
+        //初始化测试数据
+        addCanteen("一食堂");
+        addCanteen("二食堂");
+        addCanteen("三食堂");
+        addCanteen("四食堂");
+        addCanteen("五食堂");
     }
 
     @Override
@@ -54,7 +59,8 @@ public class CanteenDbHelper extends SQLiteOpenHelper {
         //获取SQLiteDatabase实例
         SQLiteDatabase db = getReadableDatabase();
         UserInfo userInfo = null;
-        String sql = "select canteen_id,canteen_name,password,register_type  from user_table where username=?";
+        String sql =
+            "select canteen_id,canteen_name,password,register_type  from user_table where username=?";
         String[] selectionArgs = {username};//查询条件
         Cursor cursor = db.rawQuery(sql, selectionArgs);
         if (cursor.moveToNext()) {
@@ -69,7 +75,6 @@ public class CanteenDbHelper extends SQLiteOpenHelper {
         return userInfo;
     }
 
-    //实现注册
     public int addCanteen(String canteen_name) {
         //获取SQLiteDatabase实例
         SQLiteDatabase db = getWritableDatabase();
@@ -92,11 +97,13 @@ public class CanteenDbHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("canteen_name", canteen_name);
         // 执行SQL
-        int update = db.update("canteen_table", values, " canteen_id=?", new String[]{canteen_id + ""});
+        int update =
+            db.update("canteen_table", values, " canteen_id=?", new String[] {canteen_id + ""});
         // 关闭数据库连接
         db.close();
         return update;
     }
+
     //将所有数据转换为一个链表传回去
     @SuppressLint("Range")
     public List<CanteenInfo> queryCanteenListData() {

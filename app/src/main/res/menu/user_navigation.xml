@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/homepage"
+        android:icon="@drawable/baseline_supervised_user_circle_24"
+        android:title="主页"
+        />
+    <item android:id="@+id/favor"
+        android:icon="@drawable/baseline_food_bank_24"
+        android:title="收藏"
+        />
+    <item android:id="@+id/usercenter"
+        android:icon="@drawable/baseline_food_bank_24"
+        android:title="用户中心"
+        />
+</menu>

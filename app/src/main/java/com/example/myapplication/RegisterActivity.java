@@ -1,13 +1,13 @@
 package com.example.myapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.db.UserDbHelper;
 
@@ -45,14 +45,18 @@ public class RegisterActivity extends AppCompatActivity {
                 }
                 //如果为空，不能注册
                 if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
-                    Toast.makeText(RegisterActivity.this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "用户名或密码不能为空",
+                        Toast.LENGTH_SHORT).show();
                 } else {
-                    int row = UserDbHelper.getInstance(RegisterActivity.this).register(username, password, selectedId);//先默认是管理员
+                    int row = UserDbHelper.getInstance(RegisterActivity.this)
+                        .register(username, password, selectedId);//先默认是管理员
                     if (row > 0) {
-                        Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT)
+                            .show();
                         finish();
                     } else {
-                        Toast.makeText(RegisterActivity.this, "用户名已存在，请登录", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "用户名已存在，请登录",
+                            Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 }

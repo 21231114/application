@@ -9,14 +9,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.R;
 
-
-public class UsersFragment extends Fragment {
-
-
-    @Override
+public class FavorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_users, container, false);
+        return inflater.inflate(R.layout.fragment_favor, container, false);
     }
 }
